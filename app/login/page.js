@@ -4,6 +4,7 @@ import { useState } from 'react'
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [userData, setUserData] = useState("");
   const handleChange =(event) =>{
     switch(event.target.id){
       case "Username":
@@ -16,9 +17,29 @@ export default function Login() {
             break;
       }
     }
+    const loginapi = async () => {
+      console.log("Test api")
+      try {
+        const response = await fetch(`/api/login?username=${username}&password=${password}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const responseData = await response.json();
+        console.log("responseData :",responseData)
+        console.log("UserData :",responseData.userData)
+        setUserData(responseData.userData);
+      } catch (error) {
+        return error
+      }
+    };
   return (
     <div className="flex justify-center items-center h-[100vh]">
-             
+             {userData && userData[0].Username}
       <div className=" flex flex-col gap-2">
       <div className=" text-8xl text-center"><i class=" fa-solid fa-users"></i></div>
         {" "}
@@ -34,7 +55,7 @@ export default function Login() {
           <input className=" rounded-full bg-transparent focus:outline-none px-2.5 " type="password" value={password} onChange={handleChange} id="Password" placeholder="Password"></input>
         </div>
         <div >
-          <button className="border-none bg-white/20 rounded-full p-1.5 w-[100%] text-white" type="button">
+          <button className="border-none bg-white/20 rounded-full p-1.5 w-[100%] text-white" onClick={loginapi} type="button">
             Login
           </button>
         </div>
