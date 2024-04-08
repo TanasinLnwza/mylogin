@@ -5,10 +5,7 @@ import { NextRequest } from 'next/server';
 export async function  GET(req) {
 const username = req.nextUrl.searchParams.get("username");
 const password = req.nextUrl.searchParams.get("password");
-console.log("username :", username);
-console.log("password :", password);
   try {
-    console.log("connect Before");
     // สร้างการเชื่อมต่อกับ MySQL
     const connection = await mysql.createConnection({
       host: 'localhost',

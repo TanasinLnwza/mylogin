@@ -1,7 +1,9 @@
 'use client'
 import Image from "next/image";
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 export default function Login() {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [userData, setUserData] = useState("");
@@ -30,9 +32,9 @@ export default function Login() {
           throw new Error('Network response was not ok');
         }
         const responseData = await response.json();
-        console.log("responseData :",responseData)
-        console.log("UserData :",responseData.userData)
         setUserData(responseData.userData);
+        localStorage.setItem('userData', JSON.stringify(responseData.userData));
+        router.push('/');
       } catch (error) {
         return error
       }
@@ -46,7 +48,7 @@ export default function Login() {
         <div className=" border-none bg-white rounded-full">
           {" "}<i className="fa-solid fa-user ml-2 pr-1"></i>
         |
-          <input className=" rounded-full focus:outline-none  px-2.5" type="text" id="Username" value={username} onChange={handleChange} placeholder="Username"></input>
+          <input className=" rounded-full bg-transparent focus:outline-none  px-2.5" type="text" id="Username" value={username} onChange={handleChange} placeholder="Username"></input>
         </div>
         <div className=" border-none bg-white rounded-full">
         <i className="fa-solid fa-lock ml-2"></i>
