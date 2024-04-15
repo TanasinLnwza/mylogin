@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  background-color: #0d263b;
-}
 
 @media (prefers-color-scheme:) {
   :root {
@@ -24,8 +21,10 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-}
+} 
