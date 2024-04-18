@@ -19,14 +19,14 @@ function itembox ({ items, itemToCart }) {
                 {" "}
                 <img
                   className={` ${styles.imgitem} ${styles.shadowborder} p-2  `}
-                  src={item.img}
+                  src={item&&item.img}
                 ></img>
-                <div className={`${styles.topshadowborder}`}>{item.name}</div>
+                <div className={`${styles.topshadowborder}`}>{item&&item.name}</div>
               </div>
               <div
                 className={`mt-1 text-center ${styles.shadowborder}  text-xs`}
               >
-                88.00 point
+                {item&&item.price} point
               </div>
               <button
                 className={`${(styles.button, styles.button1)} p-1 mt-1 w-full`}

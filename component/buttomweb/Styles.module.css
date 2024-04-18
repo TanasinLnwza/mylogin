@@ -1,4 +1,13 @@
 .buttombar{
     background-color: rgba(0, 0, 0, 0.8);
     color: aliceblue;
+    height: 200px;
+    display: block;
+}
+
+.copyright{
+    bottom: 0;
+    z-index: 999;
+    text-align: center;
+    width: 100%;
 }

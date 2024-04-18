@@ -50,6 +50,7 @@ background-color: rgba(0, 0, 0, 0.2);
 .cartbar{
   visibility: hidden;
   position: absolute;
+  right: 0;
 }
 .cartbar:hover{
   visibility: visible;

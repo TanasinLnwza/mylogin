@@ -93,7 +93,7 @@ export default function Register() {
               className={`p-1 mr-1 opacity-0${
                 message.includes("ชื่อผู้ใช้") ? "opacity-1" : "opacity-0"
               }`}
-            >หฟก</div>
+            ></div>
         </div>
         <div className=" border-solid shadow-sm bg-white rounded-full ">
           <i className="fa-solid fa-lock ml-2"></i> |

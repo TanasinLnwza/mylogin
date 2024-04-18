@@ -4,20 +4,10 @@ import Leftbar from "../leftbar/leftbar";
 import styles from "./Styles.module.css";
 import { useState } from "react";
 import CartBar from "../cart/cartbar";
-function itembar() {
-  const [itemCart, setItemCart] = useState([]);
-  const handleItemToCart = (itemToAdd) => {
-    const existingItemIndex = itemCart.findIndex(item => item.name === itemToAdd.name);
-    if (existingItemIndex !== -1) {
-      // หากมี item นี้ในตะกร้าอยู่แล้ว
-      const updatedItemCart = [...itemCart];
-      updatedItemCart[existingItemIndex].quantity += 1;
-      setItemCart(updatedItemCart);
-    } else {
-      // หากยังไม่มี item นี้ในตะกร้า
-      setItemCart([...itemCart, { ...itemToAdd, quantity: 1 }]);
-    }}
-  const itemsData = [
+function itembar({itemsData,handleItemToCart}) {
+console.log("data2",itemsData)
+  
+  const itemsData2 = [
     {
       name: "coke",
       img: '/images/items/coke.jpg',
@@ -46,12 +36,9 @@ function itembar() {
       price: 100,
       quantity: 1
     }
-  ];
-  useEffect(() =>{
-console.log(itemCart)
-  },
-[itemCart])
+  ]; 
   return (
+    
     <div className="border-none rounded-md bg-white ">
       <div className= {`${styles.borderitem} shadow-md`}> item </div>
       <div className={`${styles.Itembar}`}>
