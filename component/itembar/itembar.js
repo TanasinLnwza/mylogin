@@ -5,8 +5,6 @@ import styles from "./Styles.module.css";
 import { useState } from "react";
 import CartBar from "../cart/cartbar";
 function itembar({itemsData,handleItemToCart}) {
-console.log("data2",itemsData)
-  
   const itemsData2 = [
     {
       name: "coke",
@@ -38,10 +36,10 @@ console.log("data2",itemsData)
     }
   ]; 
   return (
-    
     <div className="border-none rounded-md bg-white ">
       <div className= {`${styles.borderitem} shadow-md`}> item </div>
       <div className={`${styles.Itembar}`}>
+     <img src=""></img>
         <div className={`${styles.Itembox }` }>
         <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
         </div>
@@ -59,7 +57,7 @@ console.log("data2",itemsData)
         <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
         </div>
         <div className={`${styles.Itembox }` }>
-        <Itembox items={[itemsData[2]]} itemToCart={handleItemToCart} />
+        <Itembox items={[itemsData[1]]} itemToCart={handleItemToCart} />
         </div>
         <div className={`${styles.Itembox }` }>
         <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />

@@ -9,7 +9,7 @@ function cart({ itemCart }) {
           <div className=" pr-2">
             {" "}
             <i className="fa-solid fa-cart-shopping p-1 ml-2 text-2xl pb-4 pt-4"></i>
-            0
+            {itemCart.length}
           </div>
         </button>
         <div

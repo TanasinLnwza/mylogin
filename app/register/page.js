@@ -2,8 +2,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "./Styles.module.css";
-
+import { useRouter } from "next/navigation";
 export default function Register() {
+  const router = useRouter();
+  const [userData, setUserData] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [Confirmpassword, setConfirmPassword] = useState("");
@@ -50,7 +52,10 @@ export default function Register() {
         }),
       });
       const responseData = await response.json();
+      setUserData(responseData.userData);
       setMessage(responseData.message);
+      localStorage.setItem("userData", JSON.stringify(responseData.userData));
+      router.push("/login");
     } catch (error) {}
   };
 
@@ -76,7 +81,7 @@ export default function Register() {
             {" "}
             <i className="fa-solid fa-user ml-2 pr-1"></i>|
             <input
-              className=" rounded-full focus:outline-none  px-2.5 text-xs "
+              className=" rounded-full bg-transparent focus:outline-none  px-2.5 text-xs "
               type="text"
               id="Username"
               value={username}
@@ -89,11 +94,6 @@ export default function Register() {
               }`}
             ></i>
           </div>
-          <div
-              className={`p-1 mr-1 opacity-0${
-                message.includes("ชื่อผู้ใช้") ? "opacity-1" : "opacity-0"
-              }`}
-            ></div>
         </div>
         <div className=" border-solid shadow-sm bg-white rounded-full ">
           <i className="fa-solid fa-lock ml-2"></i> |
@@ -142,7 +142,12 @@ export default function Register() {
             className={`border-none rounded-full ${styles.button} p-1.5 w-[100%] text-white `}
             onClick={() => {
               if (password === Confirmpassword) {
-                postData();
+                if(username.length > 4 && password.length > 4){
+                  postData();
+                }
+                else {
+                  console.log("Username or password must > 4 ");
+                }
               } else {
                 console.log("Password does not match");
               }

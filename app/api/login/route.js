@@ -19,10 +19,10 @@ const password = req.nextUrl.searchParams.get("password");
     // ปิดการเชื่อมต่อกับ MySQL
     await connection.end();
 if (rows.length > 0){
-  return Response.json({massage:"Login sucsess",userData: rows});
+  return Response.json({userData: rows});
 }
 else{
-  return Response.json({massage:"Login Fail"});
+  return Response.json({massage:"loginfailed"});
 }
   } catch (error) {
     console.error('Error:', error);

@@ -91,7 +91,7 @@ console.log(itemsData)
             {" "}
             <div>
               <div className=" ">{userData[0].Username}</div>
-              <div className=" text-xs"> 0.00 Point</div>
+              <div className=" text-xs">{userData[0].point}</div>
             </div>
             <img
               className=" ml-2 w-10 h-10 rounded-full"

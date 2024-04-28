@@ -21,6 +21,6 @@ export async function POST(request){
       }else {
         // แทรกข้อมูลใหม่ลงในฐานข้อมูล
         const [rows] = await connection.execute('INSERT INTO users (Username, Password, Emails) VALUES (?, ?, ?)', [username, password, email]);
-        return Response.json({ message: 'ข้อมูลถูกเพิ่มลงในระบบแล้ว',data: username,password,email });
+        return Response.json({ message: 'ข้อมูลถูกเพิ่มลงในระบบแล้ว',userData: username,password,email });
     }
 }
