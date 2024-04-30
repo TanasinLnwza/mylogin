@@ -67,7 +67,7 @@ export default function Register() {
   };
 
   useEffect(() => {
-    const isValid = isValidEmail(Emails);
+    const isValid = ValidateEmail(Emails);
     const emailsx = document.getElementById("emailsx");
     if (isValid) {
       emailsx.style.opacity = "0";
