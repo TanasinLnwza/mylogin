@@ -10,7 +10,7 @@ import Buttomweb from "../component/buttomweb/buttomweb";
 import Cart from "../component/cart/cart";
 export default function Home() {
   const router = useRouter();
-  const userDataString = localStorage.getItem("userData");
+  const userDataString = localStorage && localStorage.getItem("userData");
   const userData = userDataString ? JSON.parse(userDataString) : null;
   const [isOpen, setIsOpen] = useState(false);
   const [itemCart, setItemCart] = useState([]);

@@ -38,7 +38,7 @@ export default function Login() {
       if (response.ok) {
         const responseData = await response.json();
         setUserData(responseData.userData);
-        localStorage.setItem("userData", JSON.stringify(responseData.userData));
+        localStorage && localStorage.setItem("userData", JSON.stringify(responseData.userData));
         if(responseData.massage="loginfailed"){
           setLoginstate(false);
         }

@@ -11,7 +11,7 @@ import Buttomweb from "../../component/buttomweb/buttomweb";
 import Cart from "../../component/cart/cart";
 export default function Home() {
   const router = useRouter();
-  const userDataString = localStorage.getItem("userData");
+  const userDataString = localStorage && localStorage.getItem("userData");
   const userData = userDataString ? JSON.parse(userDataString) : null;
   const [isOpen, setIsOpen] = useState(false);
   const [itemCart, setItemCart] = useState([]);
@@ -27,7 +27,7 @@ export default function Home() {
       setItemCart([...itemCart, { ...itemToAdd, quantity: 1 }]);
     }}
   const handleLogout = () => {
-    localStorage.removeItem("userData");
+    localStorage && localStorage.removeItem("userData");
     router.refresh(); // โหลดหน้าใหม่หลังจากล็อกเอาท์
   };
   const handleLogin = () => {

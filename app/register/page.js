@@ -54,7 +54,7 @@ export default function Register() {
       const responseData = await response.json();
       setUserData(responseData.userData);
       setMessage(responseData.message);
-      localStorage.setItem("userData", JSON.stringify(responseData.userData));
+      localStorage && localStorage.setItem("userData", JSON.stringify(responseData.userData));
       router.push("/login");
     } catch (error) {}
   };
