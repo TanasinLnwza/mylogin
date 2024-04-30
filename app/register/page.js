@@ -148,10 +148,8 @@ export default function Register() {
             onChange={handleChange}
             placeholder="Email"
           ></input>
-          <i
-            className={`p-1 mr-1 fa-solid fa-xmark ${
-              message.includes("อีเมล") ? "opacity-1" : "opacity-0"
-            }`}
+             <i
+            className={`p-1 mr-1 fa-solid fa-xmark opacity-0`}
             id="emailsx"
           ></i>
         </div>
