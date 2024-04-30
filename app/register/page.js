@@ -11,6 +11,12 @@ export default function Register() {
   const [Confirmpassword, setConfirmPassword] = useState("");
   const [Emails, setEmails] = useState("");
   const [message, setMessage] = useState("");
+  function ValidateEmail(Emails) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(Emails.match)) {
+      return true;
+    }
+    return false;
+  }
   const handleChange = (event) => {
     switch (event.target.id) {
       case "Username":
@@ -54,10 +60,21 @@ export default function Register() {
       const responseData = await response.json();
       setUserData(responseData.userData);
       setMessage(responseData.message);
-      localStorage && localStorage.setItem("userData", JSON.stringify(responseData.userData));
+      localStorage &&
+        localStorage.setItem("userData", JSON.stringify(responseData.userData));
       router.push("/login");
     } catch (error) {}
   };
+
+  useEffect(() => {
+    const isValid = isValidEmail(Emails);
+    const emailsx = document.getElementById("emailsx");
+    if (isValid) {
+      emailsx.style.opacity = "0";
+    } else {
+      emailsx.style.opacity = "1";
+    }
+  }, [Emails]);
 
   useEffect(() => {
     const cfpassx = document.getElementById("cfpassx");
@@ -135,6 +152,7 @@ export default function Register() {
             className={`p-1 mr-1 fa-solid fa-xmark ${
               message.includes("อีเมล") ? "opacity-1" : "opacity-0"
             }`}
+            id="emailsx"
           ></i>
         </div>
         <div>
@@ -142,10 +160,9 @@ export default function Register() {
             className={`border-none rounded-full ${styles.button} p-1.5 w-[100%] text-white `}
             onClick={() => {
               if (password === Confirmpassword) {
-                if(username.length > 4 && password.length > 4){
+                if (username.length > 4 && password.length > 4) {
                   postData();
-                }
-                else {
+                } else {
                   console.log("Username or password must > 4 ");
                 }
               } else {
