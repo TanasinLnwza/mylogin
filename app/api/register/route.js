@@ -3,10 +3,10 @@ import mysql from 'mysql2/promise';
 export async function POST(request){
     const {username, password, email} = await request.json();
     const connection = await mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '1234',
-        database: 'userdata'
+      host: 'topup.c5ws460g812u.ap-southeast-1.rds.amazonaws.com',
+      user: 'admin',
+      password: '12345678',
+      database: 'topup'
       }); 
       const [existingUsers] = await connection.execute('SELECT * FROM users WHERE Username = ? OR Emails = ?', [username, email]);
       if(existingUsers.length > 0){
