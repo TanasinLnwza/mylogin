@@ -12,11 +12,12 @@ export default function Register() {
   const [Emails, setEmails] = useState("");
   const [message, setMessage] = useState("");
   function ValidateEmail(Emails) {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(Emails.match)) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(Emails)) {
       return true;
     }
     return false;
   }
+  
   const handleChange = (event) => {
     switch (event.target.id) {
       case "Username":
@@ -43,8 +44,35 @@ export default function Register() {
   const onRegister = (event) => {
     console.log(username, password, Confirmpassword, Emails);
   };
+  const loginapi = async () => {
+    try {
+      const response = await fetch(
+        `/api/login?username=${username}&password=${password}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        const responseData = await response.json();
+        setUserData(responseData.userData);
+        localStorage && localStorage.setItem("userData", JSON.stringify(responseData.userData));
+        if(responseData.massage="loginfailed"){
+          setLoginstate(false);
+        }
+          if (responseData.userData.length > 0) {
+            setLoginstate(true);
+          }
+      } else {
+        console.log("Respone not ok");
+      }
+    } catch (error) {
+      return error;
+    }
+  };
   const postData = async () => {
-    console.log("Test api");
     try {
       const response = await fetch("/api/register", {
         method: "POST",
@@ -60,9 +88,8 @@ export default function Register() {
       const responseData = await response.json();
       setUserData(responseData.userData);
       setMessage(responseData.message);
-      localStorage &&
-        localStorage.setItem("userData", JSON.stringify(responseData.userData));
-      router.push("/login");
+        loginapi();
+        router.push("/");
     } catch (error) {}
   };
 
