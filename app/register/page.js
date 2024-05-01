@@ -11,6 +11,7 @@ export default function Register() {
   const [Confirmpassword, setConfirmPassword] = useState("");
   const [Emails, setEmails] = useState("");
   const [message, setMessage] = useState("");
+  const [registerSuccess, setRegisterSuccess] = useState(false);
   function ValidateEmail(Emails) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(Emails)) {
       return true;
@@ -44,34 +45,6 @@ export default function Register() {
   const onRegister = (event) => {
     console.log(username, password, Confirmpassword, Emails);
   };
-  const loginapi = async () => {
-    try {
-      const response = await fetch(
-        `/api/login?username=${username}&password=${password}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.ok) {
-        const responseData = await response.json();
-        setUserData(responseData.userData);
-        localStorage && localStorage.setItem("userData", JSON.stringify(responseData.userData));
-        if(responseData.massage="loginfailed"){
-          setLoginstate(false);
-        }
-          if (responseData.userData.length > 0) {
-            setLoginstate(true);
-          }
-      } else {
-        console.log("Respone not ok");
-      }
-    } catch (error) {
-      return error;
-    }
-  };
   const postData = async () => {
     try {
       const response = await fetch("/api/register", {
@@ -88,10 +61,49 @@ export default function Register() {
       const responseData = await response.json();
       setUserData(responseData.userData);
       setMessage(responseData.message);
-        loginapi();
-        router.push("/");
+      if (response.ok) {
+        setRegisterSuccess(true);
+      }
     } catch (error) {}
   };
+
+  useEffect(() => {
+    if (registerSuccess) {
+      const loginapi = async () => {
+        try {
+          const response = await fetch(
+            `/api/login?username=${username}&password=${password}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (response.ok) {
+            const responseData = await response.json();
+            setUserData(responseData.userData);
+            localStorage &&
+              localStorage.setItem(
+                "userData",
+                JSON.stringify(responseData.userData)
+              );
+            if (responseData.massage === "loginfailed") {
+              console.log("Login failed");
+            }
+            if (responseData.userData.length > 0) {
+              router.push("/");
+            }
+          } else {
+            console.log("Response not ok");
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+        }
+      };
+      loginapi();
+    }
+  }, [registerSuccess]);
 
   useEffect(() => {
     const isValid = ValidateEmail(Emails);
