@@ -12,6 +12,7 @@ export default function Register() {
   const [Emails, setEmails] = useState("");
   const [message, setMessage] = useState("");
   const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [registerWait, setRegisterWait] = useState(false);
   function ValidateEmail(Emails) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(Emails)) {
       return true;
@@ -47,28 +48,35 @@ export default function Register() {
   };
   const postData = async () => {
     try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-          email: Emails,
-        }),
-      });
-      const responseData = await response.json();
-      setUserData(responseData.userData);
-      setMessage(responseData.message);
-      if (response.ok) {
-        setRegisterSuccess(true);
+      if (!registerWait) {
+        const response = await fetch("/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username,
+            password: password,
+            email: Emails,
+          }),
+        });
+        const responseData = await response.json();
+        setUserData(responseData.userData);
+        setMessage(responseData.message);
+        if (response.ok) {
+          setRegisterSuccess(true);
+          setRegisterWait(true);
+        }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error while posting data:", error);
+    }
   };
+  
 
   useEffect(() => {
     if (registerSuccess) {
+      setRegisterWait(false);
       const loginapi = async () => {
         try {
           const response = await fetch(
