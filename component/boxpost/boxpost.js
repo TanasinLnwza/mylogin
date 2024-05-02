@@ -13,14 +13,14 @@ SwiperCore.use([Navigation]);
 function Boxpost() {
   // สร้าง array ของรูปภาพตัวอย่าง
   const images = [
-    "/images/Promote/w1.jpg",
-    "/images/Promote/w2.jpg",
-    "/images/Promote/w3.jpg",
+    "/images/Promote/p4.jpg",
+    "/images/Promote/p4.jpg",
+    "/images/Promote/p4.jpg",
     // เพิ่มรูปภาพตัวอย่างเพิ่มเติมตามต้องการ
   ];
 
   // สร้างอาร์เรย์ของสีพื้นหลังที่ต้องการใช้
-  const backgroundColors = ["#CC3333", "green", "#3366FF"]; // เพิ่มสีอื่นๆตามต้องการ
+  const backgroundColors = ["#3366FF","#CC3333", "green"]; // เพิ่มสีอื่นๆตามต้องการ
 
   return (
     <div style={{ zIndex: 1 }}>

@@ -13,8 +13,12 @@ export default function Home() {
   const userDataString = typeof localStorage !== 'undefined' ? localStorage.getItem("userData") : null;
   const userData = userDataString ? JSON.parse(userDataString) : null;
   const [isOpen, setIsOpen] = useState(false);
+  const [Category, setCategory] = useState(1);
   const [itemCart, setItemCart] = useState([]);
   const [itemsData, setItemsData] = useState([]);
+  const handleCategoryChange = (category) => {
+    setCategory(category); // Update Category state
+  };
   const getitemdataapi = async () => {
     console.log("data api")
     try {
@@ -145,11 +149,11 @@ console.log(itemsData)
         </div>
         <div className=" mt-4 flex justify-center">
           <div className=" ml-4 pr-10">
-            <Leftbar />
+            <Leftbar onCategoryChange={handleCategoryChange}  />
           </div>
           <div className="pr-auto mr-20 mb-10">
             {" "}
-            <Itembar itemsData={itemsData} handleItemToCart={handleItemToCart} />
+            <Itembar itemsData={itemsData} handleItemToCart={handleItemToCart} Category={Category}/>
           </div>
         </div>
       </div>

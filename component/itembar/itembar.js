@@ -1,71 +1,61 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Itembox from "../itembox/itembox";
-import Leftbar from "../leftbar/leftbar";
 import styles from "./Styles.module.css";
-import { useState } from "react";
-import CartBar from "../cart/cartbar";
-function itembar({itemsData,handleItemToCart}) {
-  const itemsData2 = [
-    {
-      name: "coke",
-      img: '/images/items/coke.jpg',
-      des: 'soda drink coke classic ',
-      price: 100,
-      quantity: 1
-    },
-    {
-      name: "ramen Teriyaki",
-      img: '/images/items/ramen1.jpg',
-      des: 'ponk needle',
-      price: 100,
-      quantity: 1
-    },
-    {
-      name: "ramen chicken",
-      img: '/images/items/ramen2.jpg',
-      des: 'soda drink water ',
-      price: 100,
-      quantity: 1
-    },
-    {
-      name: "aw soda",
-      img: '/images/items/aw.png',
-      des: 'sdff',
-      price: 100,
-      quantity: 1
-    }
-  ]; 
-  return (
-    <div className="border-none rounded-md bg-white ">
-      <div className= {`${styles.borderitem} shadow-md`}> item </div>
-      <div className={`${styles.Itembar}`}>
-     <img src=""></img>
-        <div className={`${styles.Itembox }` }>
-        <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
-        </div>
-        <div className={`${styles.Itembox }` }>
-        <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
-        </div>
-        <div className={`${styles.Itembox }` }>
-        <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
-        </div>
-        <div className={`${styles.Itembox }` }>
-        <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
-        </div>
 
-        <div className={`${styles.Itembox }` }>
-        <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
-        </div>
-        <div className={`${styles.Itembox }` }>
-        <Itembox items={[itemsData[1]]} itemToCart={handleItemToCart} />
-        </div>
-        <div className={`${styles.Itembox }` }>
-        <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
-        </div>
-        
+function Itembar({ itemsData, handleItemToCart, Category }) {
+  // Filter items based on the selected category
+  const filteredItems = itemsData.filter(item => item.category === Category);
+
+  return (
+    <div className="border-none rounded-md bg-white">
+      <div className={`${styles.borderitem} shadow-md`}> item {Category} </div>
+      <div className={`${styles.Itembar}`}>
+        {/* Map over filtered items and render item boxes */}
+        {filteredItems.map((item, index) => (
+          <div key={index} className={`${styles.Itembox}`}>
+            <Itembox items={[item]} itemToCart={handleItemToCart} />
+          </div>
+        ))}
+        {/* Additional Itembox for Category 1 */}
+        {Category === 1 && (
+          <div className={`${styles.Itembox}`} style={{display:"flex", flexWrap:"wrap",gap:"100px"}}>
+            <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
+          </div>
+        )}
+        {/* Additional Itembox for Category 2 */}
+        {Category === 2 && (
+          <div className={`${styles.Itembox}`}  style={{display:"flex", flexWrap:"wrap",gap:"100px"}}>
+            <Itembox items={[itemsData[1]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[1]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[1]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[1]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[1]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[1]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[1]]} itemToCart={handleItemToCart} />
+          </div>
+        )}
+           {Category === 3 && (
+          <div className={`${styles.Itembox}`}  style={{display:"flex", flexWrap:"wrap",gap:"100px"}}>
+            <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
+            <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
+          </div>
+        )}
+           {Category === 4 && (
+          <div className={`${styles.Itembox}`}  style={{display:"flex", flexWrap:"wrap",gap:"100px"}}>
+            <Itembox items={[itemsData[0]]} itemToCart={handleItemToCart} />
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-export default itembar;
+export default Itembar;

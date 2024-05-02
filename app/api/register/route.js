@@ -17,7 +17,7 @@ export async function POST(request){
         if (existingUsers.find(user => user.Emails === email)) {
             duplicateFields.push('อีเมล');
         }
-        return Response.json({ message:`${duplicateFields.join(', ')}` });
+        return Response.json({ message:`${duplicateFields.join(', ')}RegisterFailed` });
       }else {
         // แทรกข้อมูลใหม่ลงในฐานข้อมูล
         const [rows] = await connection.execute('INSERT INTO users (Username, Password, Emails) VALUES (?, ?, ?)', [username, password, email]);

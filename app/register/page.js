@@ -49,6 +49,7 @@ export default function Register() {
   const postData = async () => {
     try {
       if (!registerWait) {
+        setRegisterWait(true);
         const response = await fetch("/api/register", {
           method: "POST",
           headers: {
@@ -65,8 +66,11 @@ export default function Register() {
         setMessage(responseData.message);
         if (response.ok) {
           setRegisterSuccess(true);
-          setRegisterWait(true);
+          console.log("RS:",registerSuccess)
         }
+      }
+      else{
+        console.log("Register Wait...")
       }
     } catch (error) {
       console.error("Error while posting data:", error);
@@ -124,6 +128,15 @@ export default function Register() {
   }, [Emails]);
 
   useEffect(() => {
+    const Registerbutton = document.getElementById("Registerbutton");
+    if (registerWait) {
+      Registerbutton.style.opacity = "0";
+    } else {
+      Registerbutton.style.opacity = "1";
+    }
+  }, [registerWait]);
+
+  useEffect(() => {
     const cfpassx = document.getElementById("cfpassx");
     if (password === Confirmpassword) {
       cfpassx.style.opacity = "0";
@@ -132,6 +145,9 @@ export default function Register() {
     }
   }, [password, Confirmpassword]);
   useEffect(() => {
+    if (message.includes("RegisterFailed")){
+      setRegisterWait(false);
+    }
     console.log(message);
   }, [message]);
   return (
@@ -203,6 +219,7 @@ export default function Register() {
         <div>
           <button
             className={`border-none rounded-full ${styles.button} p-1.5 w-[100%] text-white `}
+            id="Registerbutton"
             onClick={() => {
               if (password === Confirmpassword) {
                 if (username.length > 4 && password.length > 4) {
