@@ -11,12 +11,17 @@ import Buttomweb from "../../components/buttomweb/buttomweb";
 import Cart from "../../components/cart/cart";
 export default function Home() {
   const router = useRouter();
-  const userDataString = typeof localStorage !== 'undefined' ? localStorage.getItem("userData") : null;
+  const userDataString =
+    typeof localStorage !== "undefined"
+      ? localStorage.getItem("userData")
+      : null;
   const userData = userDataString ? JSON.parse(userDataString) : null;
   const [isOpen, setIsOpen] = useState(false);
   const [itemCart, setItemCart] = useState([]);
   const handleItemToCart = (itemToAdd) => {
-    const existingItemIndex = itemCart.findIndex(item => item.name === itemToAdd.name);
+    const existingItemIndex = itemCart.findIndex(
+      (item) => item.name === itemToAdd.name
+    );
     if (existingItemIndex !== -1) {
       // หากมี item นี้ในตะกร้าอยู่แล้ว
       const updatedItemCart = [...itemCart];
@@ -25,9 +30,11 @@ export default function Home() {
     } else {
       // หากยังไม่มี item นี้ในตะกร้า
       setItemCart([...itemCart, { ...itemToAdd, quantity: 1 }]);
-    }}
+    }
+  };
   const handleLogout = () => {
     localStorage && localStorage.removeItem("userData");
+    router.push("/");
     router.refresh(); // โหลดหน้าใหม่หลังจากล็อกเอาท์
   };
   const handleLogin = () => {
@@ -48,8 +55,16 @@ export default function Home() {
   return (
     <div className="max-w-100%">
       {userData && (
-        <div style={{zIndex: 2 }} className=" bg-white fixed w-full flex justify-end items-center pr-4 p-2 drop-shadow-md">
-          <button className=" absolute left-5 text-lg font-bold" onClick={handleHome}>LOGO</button>
+        <div
+          style={{ zIndex: 2 }}
+          className=" bg-white fixed w-full flex justify-end items-center pr-4 p-2 drop-shadow-md"
+        >
+          <button
+            className=" absolute left-5 text-lg font-bold"
+            onClick={handleHome}
+          >
+            LOGO
+          </button>
           <button
             className={`${styles.hamburger} ${isOpen ? styles.open : ""} ${
               styles.button1
@@ -58,8 +73,8 @@ export default function Home() {
           >
             {" "}
             <div>
-              <div className=" ">{userData[0].Username}</div>
-              <div className=" text-xs">{userData[0].point}</div>
+              <div className=" ">{userData.Username}</div>
+              <div className=" text-xs">{userData.point}</div>
             </div>
             <img
               className=" ml-2 w-10 h-10 rounded-full"
@@ -69,7 +84,10 @@ export default function Home() {
               <button className={`${styles.button12} w-full p-1`}>
                 member
               </button>
-              <button onClick={handleTopup} className={`${styles.button12} w-full p-1`}>
+              <button
+                onClick={handleTopup}
+                className={`${styles.button12} w-full p-1`}
+              >
                 เติมเงิน
               </button>
               <button
@@ -80,12 +98,20 @@ export default function Home() {
               </button>
             </span>
           </button>
-            <Cart itemCart={itemCart} />
+          <Cart itemCart={itemCart} />
         </div>
       )}
       {!userData && (
-        <div  style={{zIndex: 2 }} className=" bg-white fixed w-full flex justify-end items-center pr-4 p-2 drop-shadow-md">
-          <div className=" absolute left-5 text-lg font-bold">LOGO</div>
+        <div
+          style={{ zIndex: 2 }}
+          className=" bg-white fixed w-full flex justify-end items-center pr-4 p-2 drop-shadow-md"
+        >
+                    <button
+            className=" absolute left-5 text-lg font-bold"
+            onClick={handleHome}
+          >
+            LOGO
+          </button>
           <div className=" rounded-full bg-slate-400/20">
             {" "}
             <button
@@ -107,7 +133,10 @@ export default function Home() {
       )}
       <div className=" bg-slate-200 ">
         <div className=" bg-white">
-          <div style={{paddingTop:'80px'}}> <Boxpost /></div>
+          <div style={{ paddingTop: "80px" }}>
+            {" "}
+            <Boxpost />
+          </div>
         </div>
         <div className=" mt-4 flex justify-center">
           <div className="">
@@ -116,7 +145,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      
+
       <Buttomweb />
     </div>
   );

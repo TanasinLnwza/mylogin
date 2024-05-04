@@ -82,9 +82,10 @@ export default function Register() {
     if (registerSuccess) {
       setRegisterWait(false);
       const loginapi = async () => {
+        console.log("Test api");
         try {
           const response = await fetch(
-            `/api/login?username=${username}&password=${password}`,
+            `/api/login?username=${username}&password=${Confirmpassword}`,
             {
               method: "GET",
               headers: {
@@ -95,22 +96,18 @@ export default function Register() {
           if (response.ok) {
             const responseData = await response.json();
             setUserData(responseData.userData);
-            localStorage &&
-              localStorage.setItem(
-                "userData",
-                JSON.stringify(responseData.userData)
-              );
-            if (responseData.massage === "loginfailed") {
-              console.log("Login failed");
-            }
-            if (responseData.userData.length > 0) {
-              router.push("/");
+            localStorage && localStorage.setItem("userData", JSON.stringify(responseData.userData));
+            if (responseData.message === "Login failed") { // แก้ชื่อ property จาก 'massage' เป็น 'message'
+            } else {
+              if (responseData.userData) { // ป้องกันการเข้าถึง property ที่อาจไม่มีอยู่
+                router.push("/");
+              }
             }
           } else {
             console.log("Response not ok");
           }
         } catch (error) {
-          console.error("Login error:", error);
+          return error;
         }
       };
       loginapi();

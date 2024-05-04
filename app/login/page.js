@@ -39,15 +39,16 @@ export default function Login() {
         const responseData = await response.json();
         setUserData(responseData.userData);
         localStorage && localStorage.setItem("userData", JSON.stringify(responseData.userData));
-        if(responseData.massage="loginfailed"){
+        if (responseData.message === "Login failed") { // แก้ชื่อ property จาก 'massage' เป็น 'message'
           setLoginstate(false);
-        }
-          if (responseData.userData.length > 0) {
+        } else {
+          if (responseData.userData) { // ป้องกันการเข้าถึง property ที่อาจไม่มีอยู่
             router.push("/");
             setLoginstate(true);
           }
+        }
       } else {
-        console.log("Respone not ok");
+        console.log("Response not ok");
       }
     } catch (error) {
       return error;
