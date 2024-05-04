@@ -175,7 +175,7 @@ export default function Home() {
           <div className="w-100% "></div>
         </div>
         <div className=" mt-4 flex justify-center flex-col content-center lg:flex-row">
-          <div className=" ml-4 pr-10">
+          <div className=" ml-4 pr-10 hidden lg:block ">
             <Leftbar onCategoryChange={handleCategoryChange} />
           </div>
           <div className="pr-auto mb-10 lg:mr-20">
@@ -184,6 +184,7 @@ export default function Home() {
               itemsData={itemsData}
               handleItemToCart={handleItemToCart}
               Category={Category}
+              TohandleCategoryChange={handleCategoryChange}
             />
           </div>
         </div>

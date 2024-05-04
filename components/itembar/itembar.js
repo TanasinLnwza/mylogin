@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Itembox from "../itembox/itembox";
 import styles from "./Styles.module.css";
-
-function Itembar({ itemsData, handleItemToCart, Category }) {
+import Hambergerleftbar from "../leftbar/hambergerleftbar";
+function Itembar({ itemsData, handleItemToCart, Category ,TohandleCategoryChange }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
-
+  const handleCategoryChange = TohandleCategoryChange
   useEffect(() => {
     const filteredItems = itemsData.filter(
       (item) =>
@@ -21,6 +21,7 @@ function Itembar({ itemsData, handleItemToCart, Category }) {
         className={`${styles.borderitem} shadow-md`}
         style={{ display: "flex" }}
       >
+        <div><Hambergerleftbar onCategoryChange={handleCategoryChange}/></div>
         <div style={{ width: "100%", textWrap: "nowrap", marginRight: "20px" }}>
           item {Category}
         </div>
