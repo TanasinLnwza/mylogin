@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const hambergerleftbar = ({onCategoryChange}) => {
+const Hambergerleftbar = ({onCategoryChange}) => {
   const [isOpen, setIsOpen] = useState(false);
   const handleCategory = (number) => { // Corrected function name
     onCategoryChange(number); // Update Category state with the selected number
@@ -40,4 +40,4 @@ const hambergerleftbar = ({onCategoryChange}) => {
   );
 };
 
-export default hambergerleftbar;
+export default Hambergerleftbar;
