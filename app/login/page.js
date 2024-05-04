@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import styles from "./Styles.module.css";
-import Buttomweb from "../../component/buttomweb/buttomweb";
+import Buttomweb from "../../components/buttomweb/buttomweb";
 export default function Login() {
   const router = useRouter();
 

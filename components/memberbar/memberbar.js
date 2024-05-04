@@ -37,8 +37,7 @@ function MemberBar() {
 
   return (
     <div
-      style={{ width: "800px", height: "auto", marginBottom: "20px" }}
-      className="border-none rounded-md bg-white"
+      className="border-none rounded-md w-96 bg-white"
     >
       <div
         style={{ textAlign: "center" }}
@@ -135,9 +134,6 @@ function MemberBar() {
           </div>
           <div style={{ padding: "10px" }}>
             <div>email :</div>
-            <div>birdday :</div>
-            <div>เบอร์ :</div>
-            <div>ที่อยู่ :</div>
             <div style={{ padding: "10px" }}>
               {addresses.map((address) => (
                 <div key={address.id}>

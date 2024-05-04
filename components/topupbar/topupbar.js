@@ -7,8 +7,7 @@ import CartBar from "../cart/cartbar";
 function topupbar() {
   return (
     <div
-      style={{ width: "800px", height: "500px" }}
-      className="border-none rounded-md bg-white"
+      className="border-none rounded-md bg-white max-w-full "
     >
       <div
         style={{ textAlign: "center" }}
@@ -20,16 +19,15 @@ function topupbar() {
       <div
         style={{
           display: "flex",
-          gap: "100px",
           justifyContent: "center",
-          marginTop: "40px",
         }}
+        className=" lg:p-28 p-10 m-auto"
       >
         {" "}
         <button className={`${(styles.button)}`}
           style={{
             boxShadow: "2px 4px 4px 1px rgba(0, 0, 0, 0.1)",
-            padding: "40px",
+            padding: "0px",
           }}
         >
           {" "}
@@ -38,14 +36,14 @@ function topupbar() {
           </div>
           <div style={{ marginTop: "10px",textAlign: "center" }}>Truewallet </div>
         </button>
-        <button className={`${(styles.button)}`}
+        <button className={`${(styles.button)} ml-14`}
           style={{
             boxShadow: "2px 4px 4px 1px rgba(0, 0, 0, 0.1)",
-            padding: "40px",
+            padding: "0px",
           }}
         >
           {" "}
-          <div style={{ width: "120px", height: "120px" }}>
+          <div style={{ width: "120px", height: "120px"  }}>
             <img src="/images/logo/ThaiQR.jpg"></img>
           </div>
           <div style={{ marginTop: "10px",textAlign: "center" }}>Promptpay </div>

@@ -10,10 +10,10 @@ function LeftBar({onCategoryChange}) { // Changed function name to start with lo
       <div className={`${styles.topleftbar} p-1`}>ประเภทสินค้า</div>
       <div className="p-2">
         {/* Corrected onClick handlers to pass functions */}
-        <div><button onClick={() => handleCategory(1)}>1</button></div>
-        <div><button onClick={() => handleCategory(2)}>2</button></div>
-        <div><button onClick={() => handleCategory(3)}>3</button></div>
-        <div><button onClick={() => handleCategory(4)}>4</button></div>
+        <div><button onClick={() => handleCategory("typeA")}>typeA</button></div>
+        <div><button onClick={() => handleCategory("typeB")}>typeB</button></div>
+        <div><button onClick={() => handleCategory("typeC")}>typeC</button></div>
+        <div><button onClick={() => handleCategory("typeD")}>typeD</button></div>
       </div>
     </div>
   );

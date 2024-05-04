@@ -3,17 +3,17 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styles from "./Styles.module.css";
-import Boxpost from "../component/boxpost/boxpost";
-import Itembar from "../component/itembar/itembar";
-import Leftbar from "../component/leftbar/leftbar";
-import Buttomweb from "../component/buttomweb/buttomweb";
-import Cart from "../component/cart/cart";
+import Boxpost from "../components/boxpost/boxpost";
+import Itembar from "../components/itembar/itembar";
+import Leftbar from "../components/leftbar/leftbar";
+import Buttomweb from "../components/buttomweb/buttomweb";
+import Cart from "../components/cart/cart";
 export default function Home() {
   const router = useRouter();
   const userDataString = typeof localStorage !== 'undefined' ? localStorage.getItem("userData") : null;
   const userData = userDataString ? JSON.parse(userDataString) : null;
   const [isOpen, setIsOpen] = useState(false);
-  const [Category, setCategory] = useState(1);
+  const [Category, setCategory] = useState("typeA");
   const [itemCart, setItemCart] = useState([]);
   const [itemsData, setItemsData] = useState([]);
   const handleCategoryChange = (category) => {
@@ -141,23 +141,22 @@ console.log(itemsData)
           </div>
         </div>
       )}
-      <div className=" bg-slate-200 ">
+      <div className=" bg-slate-200">
         <div className=" bg-white">
           <div style={{paddingTop:'80px'}}> <Boxpost /></div>
           <div className="w-100% ">
           </div>
         </div>
-        <div className=" mt-4 flex justify-center">
+        <div className=" mt-4 flex justify-center flex-col content-center lg:flex-row">
           <div className=" ml-4 pr-10">
             <Leftbar onCategoryChange={handleCategoryChange}  />
           </div>
-          <div className="pr-auto mr-20 mb-10">
+          <div className="pr-auto mb-10 lg:mr-20">
             {" "}
             <Itembar itemsData={itemsData} handleItemToCart={handleItemToCart} Category={Category}/>
           </div>
         </div>
       </div>
-      
       <Buttomweb />
     </div>
   );

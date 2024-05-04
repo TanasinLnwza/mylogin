@@ -3,12 +3,12 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styles from "./Styles.module.css";
-import Boxpost from "../../component/boxpost/boxpost";
-import Itembar from "../../component/itembar/itembar";
-import Leftbar from "../../component/leftbar/leftbar";
-import Memberbar from "../../component/memberbar/memberbar";
-import Buttomweb from "../../component/buttomweb/buttomweb";
-import Cart from "../../component/cart/cart";
+import Boxpost from "../../components/boxpost/boxpost";
+import Itembar from "../../components/itembar/itembar";
+import Leftbar from "../../components/leftbar/leftbar";
+import Memberbar from "../../components/memberbar/memberbar";
+import Buttomweb from "../../components/buttomweb/buttomweb";
+import Cart from "../../components/cart/cart";
 export default function Home() {
   const router = useRouter();
   const userDataString = typeof localStorage !== 'undefined' ? localStorage.getItem("userData") : null;
@@ -46,7 +46,7 @@ export default function Home() {
     setIsOpen(!isOpen);
   };
   return (
-    <div className="">
+    <div className="max-w-100%">
       {userData && (
         <div style={{zIndex: 2 }} className=" bg-white fixed w-full flex justify-end items-center pr-4 p-2 drop-shadow-md">
           <button className=" absolute left-5 text-lg font-bold" onClick={handleHome}>LOGO</button>
@@ -110,7 +110,7 @@ export default function Home() {
           <div style={{paddingTop:'80px'}}> <Boxpost /></div>
         </div>
         <div className=" mt-4 flex justify-center">
-          <div className="ml-40 mr-40 ">
+          <div className="">
             {" "}
             <Memberbar />
           </div>
