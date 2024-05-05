@@ -1,11 +1,11 @@
 import React from 'react';
 
-function CartBar({ itemCart }) {
+function CartBarQuantity({ itemCart }) {
   return (
     <div >
       {itemCart.map((item, index) => (
         <div style={{display:'flex', padding:'1px', left:'0'}} key={index}>
-          <div>{item.name}</div>
+          <div>{item.quantity}</div>
           {/* แสดงข้อมูลอื่น ๆ ที่ต้องการ */}
         </div>
       ))}
@@ -13,4 +13,4 @@ function CartBar({ itemCart }) {
   );
 }
 
-export default CartBar;
+export default CartBarQuantity;

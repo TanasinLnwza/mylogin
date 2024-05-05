@@ -1,7 +1,19 @@
 import React from "react";
 import styles from "./Styles.module.css";
 import CartBar from "./cartbar";
-function cart({ itemCart }) {
+import CartBarQuantity from "./cartbarquantity";
+import CartBarPrice from "./cartbarprice";
+
+function Cart({ itemCart }) {
+  // ฟังก์ชันสำหรับคำนวณราคารวมของสินค้าทั้งหมด
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    itemCart.forEach((item) => {
+      totalPrice += item.price * item.quantity;
+    });
+    return totalPrice;
+  };
+
   return (
     <div>
       <div className="">
@@ -15,19 +27,38 @@ function cart({ itemCart }) {
         <div
           className={` ${styles.cartbar} h-40 bg-white rounded-md absolute flex flex-col justify-center items-center`}
         >
-          <div style={{gap:'20px'}} className="p-1 flex">
-            สินค้า
-            <div>จำนวน</div>
-            <div>ราคา</div>
+          <div className={` ${styles.scrollbar} flex `}>
+            <div className=" flex flex-col">
+              <div className="sticky top-0 bg-white">สินค้า</div>
+              <div className=" static">
+                <CartBar itemCart={itemCart} />
+              </div>
+            </div>
+            <div className=" flex flex-col">
+              <div className="sticky top-0 bg-white">จำนวน</div>
+              <CartBarQuantity itemCart={itemCart} />
+            </div>
+            <div className=" flex flex-col">
+              <div className="sticky top-0 bg-white">ราคา</div>
+              <CartBarPrice itemCart={itemCart} />
+            </div>
           </div>
-          <div className="">
-            <CartBar itemCart={itemCart} />
-          </div>
-          <button style={{background:"#00b667	", width:'100%',borderRadius:"0px 0 4px 4px ", color:'white'}} className={`${(styles.button1)}`}>ชำระเงิน</button>
+          <div className="">รวม: {calculateTotalPrice()} point</div>
+          <button
+            style={{
+              background: "#00b667 ",
+              width: "100%",
+              borderRadius: "0px 0 4px 4px ",
+              color: "white",
+            }}
+            className={`${styles.button1}`}
+          >
+            ชำระเงิน
+          </button>
         </div>
       </div>
     </div>
   );
 }
 
-export default cart;
+export default Cart;
