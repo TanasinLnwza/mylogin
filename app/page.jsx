@@ -66,6 +66,7 @@ export default function Home() {
       } else {
         localStorage.setItem(`CartAll`, JSON.stringify({ cartDataAll }));
         console.log("cartDataAllsetLoad:", cartDataAll);
+        setCartUser(cartDataAll[cartKeyIndex].itemCart);
       }
     } else {
       if (cartDataAll.length === 0) {
@@ -74,7 +75,7 @@ export default function Home() {
       } else {
         localStorage.setItem(`CartAll`, JSON.stringify({ cartDataAll }));
         console.log("cartDataAllsetLoad:", cartDataAll);
-        setCartUser(cartDataAll[cartKeyIndex]?.itemCart || []);
+        setCartUser(cartDataAll[cartKeyIndex].itemCart);
       }
     }
   }, [cartDataAll]);
