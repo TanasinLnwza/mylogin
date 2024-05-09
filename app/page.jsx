@@ -21,11 +21,17 @@ export default function Home() {
     itemCart: [],
     cartKey: "null",
   });
+
   const [cartDataAll, setCartDataAll] = useState([]);
   const [itemsData, setItemsData] = useState([]);
-  const isCartKeyExist = () => {
-    return cartDataAll.some((cart) => cart.cartKey === userData.Username);
-  };
+  const cartKeyIndex = cartDataAll.findIndex((cart) => {
+    if (userData && userData.Username) {
+      return cart.cartKey === userData.Username;
+    } else {
+      return false;
+    }
+  });
+  const [cartUser, setCartUser] = useState([]);
   const handleCategoryChange = (category) => {
     setCategory(category); // Update Category state
   };
@@ -68,6 +74,7 @@ export default function Home() {
       } else {
         localStorage.setItem(`CartAll`, JSON.stringify({ cartDataAll }));
         console.log("cartDataAllsetLoad:", cartDataAll);
+        setCartUser(cartDataAll[cartKeyIndex]?.itemCart || []);
       }
     }
   }, [cartDataAll]);
@@ -108,16 +115,24 @@ export default function Home() {
         })
       );
 
-      if (isCartKeyExist()) {
-        console.log("x");
-      } else {
+      if (cartKeyIndex === -1) {
         setCartDataAll((prevState) => [
           ...prevState,
           {
-            itemCart: [],
+            itemCart: newItemCart,
             cartKey: userData.Username,
           },
         ]);
+      } else {
+        setCartDataAll((prevState) => {
+          // คัดลอก prevState ไว้ก่อน
+          const updatedCartDataAll = [...prevState];
+          // กำหนดค่า itemCart ใน index ที่ 1 เป็น []
+          updatedCartDataAll[cartKeyIndex].itemCart = newItemCart;
+          // คืนค่า updatedCartDataAll ที่มีการเปลี่ยนแปลง
+          return updatedCartDataAll;
+        });
+        
       }
     }
   };
@@ -194,7 +209,7 @@ export default function Home() {
               </button>
             </span>
           </button>
-          <Cart itemCart={cartData.itemCart} />
+          <Cart itemCart={cartUser} />
         </div>
       )}
       {!userData && (
