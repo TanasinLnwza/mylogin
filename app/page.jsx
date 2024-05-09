@@ -17,8 +17,15 @@ export default function Home() {
   const userData = userDataString ? JSON.parse(userDataString) : null;
   const [isOpen, setIsOpen] = useState(false);
   const [Category, setCategory] = useState("typeA");
-  const [itemCart, setItemCart] = useState([]);
+  const [cartData, setCartData] = useState({
+    itemCart: [],
+    cartKey: "null",
+  });
+  const [cartDataAll, setCartDataAll] = useState([]);
   const [itemsData, setItemsData] = useState([]);
+  const isCartKeyExist = () => {
+    return cartDataAll.some((cart) => cart.cartKey === userData.Username);
+  };
   const handleCategoryChange = (category) => {
     setCategory(category); // Update Category state
   };
@@ -39,28 +46,82 @@ export default function Home() {
       return error;
     }
   };
+
   useEffect(() => {
     console.log("Component loaded");
     getitemdataapi();
   }, []);
 
   useEffect(() => {
-    console.log(itemsData);
-  }, [itemsData]);
+    const storedCartDataAll = JSON.parse(localStorage.getItem("CartAll"));
+    if (!storedCartDataAll || storedCartDataAll.length === 0) {
+      if (cartDataAll.length === 0) {
+        console.log("cartDataAllsetFound:");
+      } else {
+        localStorage.setItem(`CartAll`, JSON.stringify({ cartDataAll }));
+        console.log("cartDataAllsetLoad:", cartDataAll);
+      }
+    } else {
+      if (cartDataAll.length === 0) {
+        setCartDataAll(storedCartDataAll.cartDataAll);
+        console.log("cartDataAllset1:", cartDataAll);
+      } else {
+        localStorage.setItem(`CartAll`, JSON.stringify({ cartDataAll }));
+        console.log("cartDataAllsetLoad:", cartDataAll);
+      }
+    }
+  }, [cartDataAll]);
+
+  useEffect(() => {
+    const storedCartData = JSON.parse(localStorage.getItem("Cart")) || cartData;
+    setCartData(storedCartData);
+  }, []);
   const handleItemToCart = (itemToAdd) => {
-    const existingItemIndex = itemCart.findIndex(
+    const existingItemIndex = cartData.itemCart.findIndex(
       (item) => item.name === itemToAdd.name
     );
     if (existingItemIndex !== -1) {
-      // หากมี item นี้ในตะกร้าอยู่แล้ว
-      const updatedItemCart = [...itemCart];
+      const updatedItemCart = [...cartData.itemCart];
       updatedItemCart[existingItemIndex].quantity += 1;
-      setItemCart(updatedItemCart);
+      setCartData((prevState) => ({
+        ...prevState,
+        itemCart: updatedItemCart,
+      }));
+      localStorage.setItem(
+        `Cart`,
+        JSON.stringify({ ...cartData, itemCart: updatedItemCart })
+      );
     } else {
-      // หากยังไม่มี item นี้ในตะกร้า
-      setItemCart([...itemCart, { ...itemToAdd, quantity: 1 }]);
+      // เพิ่มสินค้าใหม่ลงในตะกร้า
+      const newItemCart = [...cartData.itemCart, { ...itemToAdd, quantity: 1 }];
+      setCartData((prevState) => ({
+        ...prevState,
+        itemCart: newItemCart,
+        cartKey: userData ? userData.Username : "",
+      }));
+      localStorage.setItem(
+        `Cart`,
+        JSON.stringify({
+          ...cartData,
+          itemCart: newItemCart,
+          cartKey: userData ? userData.Username : "",
+        })
+      );
+
+      if (isCartKeyExist()) {
+        console.log("x");
+      } else {
+        setCartDataAll((prevState) => [
+          ...prevState,
+          {
+            itemCart: [],
+            cartKey: userData.Username,
+          },
+        ]);
+      }
     }
   };
+
   const handleLogout = () => {
     localStorage.removeItem("userData");
     router.refresh(); // โหลดหน้าใหม่หลังจากล็อกเอาท์
@@ -133,7 +194,7 @@ export default function Home() {
               </button>
             </span>
           </button>
-          <Cart itemCart={itemCart} />
+          <Cart itemCart={cartData.itemCart} />
         </div>
       )}
       {!userData && (

@@ -8,9 +8,11 @@ function Cart({ itemCart }) {
   // ฟังก์ชันสำหรับคำนวณราคารวมของสินค้าทั้งหมด
   const calculateTotalPrice = () => {
     let totalPrice = 0;
-    itemCart.forEach((item) => {
-      totalPrice += item.price * item.quantity;
-    });
+    if (itemCart && itemCart.length > 0) {
+      itemCart.forEach((item) => {
+        totalPrice += item.price * item.quantity;
+      });
+    }
     return totalPrice;
   };
 
@@ -21,7 +23,7 @@ function Cart({ itemCart }) {
           <div className=" pr-2">
             {" "}
             <i className="fa-solid fa-cart-shopping p-1 ml-2 text-2xl pb-4 pt-4"></i>
-            {itemCart.length}
+            {itemCart && itemCart.length}
           </div>
         </button>
         <div
@@ -29,21 +31,21 @@ function Cart({ itemCart }) {
         >
           <div className={` ${styles.scrollbar} flex `}>
             <div className=" flex flex-col">
-              <div className="sticky top-0 bg-white">สินค้า</div>
+              <div className="sticky top-0 bg-white shadow-md">สินค้า</div>
               <div className=" static">
                 <CartBar itemCart={itemCart} />
               </div>
             </div>
             <div className=" flex flex-col">
-              <div className="sticky top-0 bg-white">จำนวน</div>
+              <div className="sticky top-0 bg-white shadow-md">จำนวน</div>
               <CartBarQuantity itemCart={itemCart} />
             </div>
             <div className=" flex flex-col">
-              <div className="sticky top-0 bg-white">ราคา</div>
+              <div className="sticky top-0 bg-white shadow-md">ราคา</div>
               <CartBarPrice itemCart={itemCart} />
             </div>
           </div>
-          <div className="">รวม: {calculateTotalPrice()} point</div>
+          <div className="shadow-lg">รวม: {calculateTotalPrice()} point</div>
           <button
             style={{
               background: "#00b667 ",
