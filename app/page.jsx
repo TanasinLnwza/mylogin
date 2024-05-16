@@ -12,7 +12,7 @@ export default function Home() {
   const router = useRouter();
   const [isLoaded, setIsLoaded] = useState(true);
   const [user, setUser] = useState([]);
-  const token = localStorage.getItem('Token')
+  const token = localStorage.getItem('Token') || null;
   const userDataString =
     typeof localStorage !== "undefined"
       ? localStorage.getItem("userData")
