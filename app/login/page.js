@@ -4,12 +4,12 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import styles from "./Styles.module.css";
 import Buttomweb from "../../components/buttomweb/buttomweb";
+import Swal from 'sweetalert2'
 export default function Login() {
   const router = useRouter();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [userData, setUserData] = useState("");
   const [loginstate, setLoginstate] = useState(true);
   const handleChange = (event) => {
     switch (event.target.id) {
@@ -23,37 +23,50 @@ export default function Login() {
         break;
     }
   };
-  const loginapi = async () => {
-    console.log("Test api");
-    try {
-      const response = await fetch(
-        `/api/login?username=${username}&password=${password}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.ok) {
-        const responseData = await response.json();
-        setUserData(responseData.userData);
-        localStorage && localStorage.setItem("userData", JSON.stringify(responseData.userData));
-        if (responseData.message === "Login failed") { // แก้ชื่อ property จาก 'massage' เป็น 'message'
-          setLoginstate(false);
-        } else {
-          if (responseData.userData) { // ป้องกันการเข้าถึง property ที่อาจไม่มีอยู่
-            router.push("/");
-            setLoginstate(true);
+  const login = () => {
+    if (loginstate) {
+      fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+          //"expiresIn": 800000
+        }),
+      })
+        .then((Response) => {
+          if (Response.ok) {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              },
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Signed in successfully",
+            });
+            setLoginstate(false)
+            return Response.json();
+          } else {
+            console.log("respon not ok!");
           }
-        }
-      } else {
-        console.log("Response not ok");
-      }
-    } catch (error) {
-      return error;
+        })
+        .then((dataUser) => {
+          localStorage.setItem("Token", dataUser.token);
+          setLoginstate(true)
+          router.push("/");
+        });
     }
   };
+
   return (
     <div className="flex justify-center items-center h-[100vh]">
       <div className=" flex flex-col gap-2">
@@ -61,7 +74,9 @@ export default function Login() {
           <i class=" fa-solid fa-users"></i>
         </div>{" "}
         <div className=" border-solid shadow-sm bg-white rounded-full mt-4">
-          <div className={` text-red-500 ${loginstate ? 'hidden' : ''}`}>ล็อคอินล้มเหลว</div>{" "}
+          <div className={` text-red-500 ${loginstate ? "hidden" : ""}`}>
+            ล็อคอินล้มเหลว
+          </div>{" "}
           <i className="fa-solid fa-user ml-2 pr-1 "></i>|
           <input
             className=" rounded-full bg-transparent focus:outline-none  px-2.5 text-xs"
@@ -86,7 +101,7 @@ export default function Login() {
         <div>
           <button
             className={`border-none ${styles.button} rounded-full p-1.5 w-[100%] text-white`}
-            onClick={loginapi}
+            onClick={login}
             type="button"
           >
             <span>Login </span>

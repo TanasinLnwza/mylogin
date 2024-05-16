@@ -10,6 +10,9 @@ import Buttomweb from "../components/buttomweb/buttomweb";
 import Cart from "../components/cart/cart";
 export default function Home() {
   const router = useRouter();
+  const [isLoaded, setIsLoaded] = useState(true);
+  const [user, setUser] = useState([]);
+  const token = localStorage.getItem('Token')
   const userDataString =
     typeof localStorage !== "undefined"
       ? localStorage.getItem("userData")
@@ -53,10 +56,43 @@ export default function Home() {
     }
   };
 
+  const aunth = () => {
+    fetch('/api/aunth', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+    })
+      .then(Response => {
+        if (Response.ok) {
+          return Response.json();
+        }
+        else {
+          console.log("not Response")
+        }
+      })
+
+      .then(result => {
+        if (result) {
+          setUser(result.decoded);
+          setIsLoaded(false);
+          console.log("resul",result.decoded)
+        }
+        else {
+          setUser(null);
+        }
+      })
+  }
+
   useEffect(() => {
+    aunth();
     console.log("Component loaded");
     getitemdataapi();
   }, []);
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   useEffect(() => {
     const storedCartDataAll = JSON.parse(localStorage.getItem("CartAll"));
@@ -139,7 +175,7 @@ export default function Home() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("userData");
+    localStorage.removeItem("Token");
     router.refresh(); // โหลดหน้าใหม่หลังจากล็อกเอาท์
   };
   const handleLogin = () => {
@@ -161,9 +197,12 @@ export default function Home() {
   const userhamberger = () => {
     setIsOpen(!isOpen);
   };
+  if (isLoaded) {
+    <div>Loading...</div>
+  }
   return (
     <div className="">
-      {userData && (
+      {user && (
         <div
           style={{ zIndex: 2 }}
           className=" bg-white fixed w-full flex justify-end items-center pr-4 p-2 drop-shadow-md"
@@ -182,8 +221,8 @@ export default function Home() {
           >
             {" "}
             <div>
-              <div className=" ">{userData.Username}</div>
-              <div className=" text-xs">{userData.point}</div>
+              <div className=" ">{user.username}</div>
+              <div className=" text-xs">{user.userpoint} point</div>
             </div>
             <img
               className=" ml-2 w-10 h-10 rounded-full"
@@ -213,7 +252,7 @@ export default function Home() {
           <Cart itemCart={cartUser} />
         </div>
       )}
-      {!userData && (
+      {!user && (
         <div
           style={{ zIndex: 2 }}
           className=" bg-white fixed w-full flex justify-end items-center pr-4 p-2 drop-shadow-md"
