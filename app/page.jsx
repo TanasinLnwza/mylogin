@@ -13,11 +13,6 @@ export default function Home() {
   const [isLoaded, setIsLoaded] = useState(true);
   const [user, setUser] = useState([]);
   const token = localStorage.getItem('Token') || null;
-  const userDataString =
-    typeof localStorage !== "undefined"
-      ? localStorage.getItem("userData")
-      : null;
-  const userData = userDataString ? JSON.parse(userDataString) : null;
   const [isOpen, setIsOpen] = useState(false);
   const [Category, setCategory] = useState("typeA");
   const [cartData, setCartData] = useState({
@@ -28,8 +23,8 @@ export default function Home() {
   const [cartDataAll, setCartDataAll] = useState([]);
   const [itemsData, setItemsData] = useState([]);
   const cartKeyIndex = cartDataAll.findIndex((cart) => {
-    if (userData && userData.Username) {
-      return cart.cartKey === userData.Username;
+    if (user && user.username) {
+      return cart.cartKey === user.username;
     } else {
       return false;
     }
