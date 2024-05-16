@@ -12,7 +12,6 @@ export default function Home() {
   const router = useRouter();
   const [isLoaded, setIsLoaded] = useState(true);
   const [user, setUser] = useState([]);
-  const token = ('Token') || "null";
   const [isOpen, setIsOpen] = useState(false);
   const [Category, setCategory] = useState("typeA");
   const [cartData, setCartData] = useState({
@@ -52,6 +51,7 @@ export default function Home() {
   };
 
   const aunth = () => {
+    let token = localStorage.getItem('Token') || "null";
     fetch('/api/aunth', {
       method: 'GET',
       headers: {
