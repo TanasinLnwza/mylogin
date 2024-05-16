@@ -12,7 +12,7 @@ export default function Home() {
   const router = useRouter();
   const [isLoaded, setIsLoaded] = useState(true);
   const [user, setUser] = useState([]);
-  const token = localStorage.getItem('Token') || "null";
+  const token = ('Token') || "null";
   const [isOpen, setIsOpen] = useState(false);
   const [Category, setCategory] = useState("typeA");
   const [cartData, setCartData] = useState({
